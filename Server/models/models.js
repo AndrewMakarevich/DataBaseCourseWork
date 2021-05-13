@@ -4,11 +4,13 @@ const {DataTypes} = require('sequelize');
 
 const Client = sequelize.define('client', {
       passportID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
+      role:{type: DataTypes.STRING, allowNull: false}, 
       passportSeries:{type: DataTypes.INTEGER, unique: true, allowNull: false},
       passportValidity:{type: DataTypes.DATE, allowNull: false},
       surname:{type: DataTypes.STRING, unique: true, allowNull: false},
       name:{type: DataTypes.STRING, unique: true, allowNull: false},
-      password:{type: DataTypes.STRING, allowNull: false}    
+      password:{type: DataTypes.STRING, allowNull: false},  
+       
 });
 
 const Ticket = sequelize.define('ticket', {
