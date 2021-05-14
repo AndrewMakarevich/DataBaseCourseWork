@@ -1,7 +1,7 @@
 const Router = require('express');
 const router = new Router();
 const crewController = require('../controllers/crewController');
-router.post('/');
-router.get('/');
-router.get('/:id');// для получения конкретной команды
+router.post('/',crewController.create);
+router.get('/',crewController.getAll);
+router.get('/:id',crewController.getOne);// для получения конкретной команды
 module.exports = router;

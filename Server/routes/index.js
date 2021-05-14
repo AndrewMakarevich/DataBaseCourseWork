@@ -19,6 +19,6 @@ router.use('/pilot',pilotRouter);
 router.use('/registration',registrationRouter);
 router.use('/seat',seatRouter);
 router.use('/ticket',ticketRouter);
-router.use('/seat',crewRouter);
+router.use('/crew',crewRouter);
 
 module.exports = router;

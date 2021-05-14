@@ -49,7 +49,7 @@ const Flight = sequelize.define('flight', {
     flightID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
 });
 
-const AirPlane = sequelize.define('air_plain', {
+const AirPlane = sequelize.define('airplain', {
     placeAmount:{type: DataTypes.INTEGER, allowNull: false},
     planeModel:{type: DataTypes.STRING, allowNull: false},
     planeID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 

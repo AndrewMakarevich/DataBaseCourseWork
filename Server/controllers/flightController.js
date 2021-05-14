@@ -6,6 +6,9 @@ class flightController{
     async getAll(req, res){
         
     }
+    async getOne(req, res){
+        
+    }
 
 }
 
