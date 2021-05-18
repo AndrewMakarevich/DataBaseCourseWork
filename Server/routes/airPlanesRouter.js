@@ -4,6 +4,6 @@ const airplaneController = require('../controllers/airPlaneController');
 
 router.post('/',airplaneController.create);
 router.get('/',airplaneController.getAll);
-router.get('/:id');// для получения конкретного самолета
+router.get('/:id',airplaneController.getOne);// для получения конкретного самолета
 
 module.exports = router;

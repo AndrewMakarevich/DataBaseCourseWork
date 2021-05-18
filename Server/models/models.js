@@ -3,7 +3,7 @@ const {DataTypes} = require('sequelize');
 
 
 const Client = sequelize.define('client', {
-      passportID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
+      id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
       role:{type: DataTypes.STRING, allowNull: false}, 
       passportSeries:{type: DataTypes.INTEGER, unique: true, allowNull: false},
       passportValidity:{type: DataTypes.DATE, allowNull: false},
@@ -14,7 +14,7 @@ const Client = sequelize.define('client', {
 });
 
 const Ticket = sequelize.define('ticket', {
-    ticketID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
     agentName:{type: DataTypes.STRING},
     price:{type: DataTypes.FLOAT, allowNull: false}, 
 });
@@ -30,15 +30,15 @@ const Airport = sequelize.define('airport', {
     airportName:{type: DataTypes.STRING, allowNull: false},
     airportCountry:{type: DataTypes.STRING, allowNull: false},
     airportAddress:{type: DataTypes.STRING},
-    airportID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
 });
 
 const PlaceOfDestination = sequelize.define('place_of_destination', {
-    destinationID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
 });
 
 const DeparturePoint = sequelize.define('departure_point', {
-    departurePointID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
 });
 
 const Flight = sequelize.define('flight', {
@@ -46,21 +46,21 @@ const Flight = sequelize.define('flight', {
     arrivalDate:{type: DataTypes.DATE, allowNull: false},
     departureTime:{type: DataTypes.TIME, allowNull: false},
     arrivalTime:{type: DataTypes.TIME, allowNull: false},
-    flightID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
 });
 
-const AirPlane = sequelize.define('airplain', {
+const AirPlane = sequelize.define('airplane', {
     placeAmount:{type: DataTypes.INTEGER, allowNull: false},
     planeModel:{type: DataTypes.STRING, allowNull: false},
-    planeID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
 });
 
 const Crew = sequelize.define('crew', {
-    crewID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
 });
 
 const Pilot = sequelize.define('pilot', {
-    pilotID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
     pilotName:{type: DataTypes.STRING, allowNull: false},
     pilotSurname:{type: DataTypes.STRING},
     workExperience:{type: DataTypes.STRING, allowNull: false},
@@ -68,7 +68,7 @@ const Pilot = sequelize.define('pilot', {
 });
 
 const Seat = sequelize.define('seat', {
-    seatID:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
     seatNumber:{type: DataTypes.INTEGER, allowNull: false},
     row:{type: DataTypes.INTEGER},
     seatClass:{type: DataTypes.STRING, allowNull: false}
@@ -102,8 +102,8 @@ Crew.hasOne(AirPlane);
 AirPlane.belongsTo(Crew);
 
 
-Pilot.hasOne(Crew);
-Crew.belongsTo(Pilot);
+Crew.hasMany(Pilot);
+Pilot.belongsTo(Crew);
 
 AirPlane.hasMany(Seat);
 Seat.belongsTo(AirPlane);

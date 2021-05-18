@@ -7,10 +7,16 @@ class airportController{
         return res.json(airport);
     }
     async getAll(req, res){
-        
+        const airports = await Airport.findAll();
+       return res.json(airports);
     }
     async getOne(req, res){
-        
+        const {id} = req.params;
+        const airport = await Airport.findOne(
+            {
+                where:{id}
+            });
+        return res.json(airport);
     }
 
 }
