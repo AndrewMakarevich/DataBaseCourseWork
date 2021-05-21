@@ -23,7 +23,10 @@ function App() {
             </div> 
           
       </div>  
-      <AppRouter />
+        <div className="RoutePages">
+            <AppRouter />
+        </div>
+      
     </BrowserRouter>
     
   );

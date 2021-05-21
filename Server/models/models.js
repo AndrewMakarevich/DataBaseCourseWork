@@ -21,6 +21,7 @@ const Ticket = sequelize.define('ticket', {
 });
 
 const Registration = sequelize.define('registration', {
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
     registrationDate:{type: DataTypes.DATE},
     registrationTime:{type: DataTypes.TIME},
     confirmation:{type: DataTypes.BOOLEAN},
@@ -28,17 +29,18 @@ const Registration = sequelize.define('registration', {
 });
 
 const Airport = sequelize.define('airport', {
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
     airportName:{type: DataTypes.STRING, allowNull: false},
     airportCountry:{type: DataTypes.STRING, allowNull: false},
     airportAddress:{type: DataTypes.STRING},
+    
+});
+
+const PlaceOfDestination = sequelize.define('placeOfDestination', {
     id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
 });
 
-const PlaceOfDestination = sequelize.define('place_of_destination', {
-    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
-});
-
-const DeparturePoint = sequelize.define('departure_point', {
+const DeparturePoint = sequelize.define('departurePoint', {
     id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
 });
 
@@ -51,9 +53,10 @@ const Flight = sequelize.define('flight', {
 });
 
 const AirPlane = sequelize.define('airplane', {
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
     placeAmount:{type: DataTypes.INTEGER, allowNull: false},
     planeModel:{type: DataTypes.STRING, allowNull: false},
-    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 
+     
 });
 
 const Crew = sequelize.define('crew', {
