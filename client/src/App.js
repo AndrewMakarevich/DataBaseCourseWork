@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
-import './AdaptiveMenuScript';
+
 import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './components/AppRouter';
+import NavBar from './components/NavBar.js';
 
 function App() {
   return (
     <BrowserRouter>
-        <div className="AppBar">
+        {/* <div className="AppBar">
         
             <div className="mobileMenuVersion">
               <span className="firstSpan"></span>
@@ -22,7 +23,8 @@ function App() {
             <button color="primary"><a href="/flights">Flights</a></button>
             </div> 
           
-      </div>  
+      </div>   */}
+      <NavBar />
         <div className="RoutePages">
             <AppRouter />
         </div>
