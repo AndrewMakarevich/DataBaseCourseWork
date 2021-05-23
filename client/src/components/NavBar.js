@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-// import './NavBar.css';
+import './NavBar.css';
 import './AdaptiveMenuScript.js';
 import {observer} from 'mobx-react-lite';
 import { Context } from '..';
