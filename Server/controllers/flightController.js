@@ -11,7 +11,9 @@ class flightController{
     }
     async getAll(req, res){
         const flights = await Flight.findAll({
-          include:[{model: AirPlane, as: 'airplane'}]
+          include:[
+            {model: AirPlane, as: 'airplane'}
+          ]
         });
         return res.json(flights);
     }

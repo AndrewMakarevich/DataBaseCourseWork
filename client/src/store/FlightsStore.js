@@ -144,7 +144,7 @@ export default class FlightsStore {
                 arrivalDate: "2021-07-28T23:48:47.204Z",
                 departureTime: "17:10:26",
                 arrivalTime: "21:23:19",
-                id: 3,
+                id: 1,
                 placeOfDestinationId: 1,
                 departurePointId: 2,
                 airplaneId: 1,
@@ -160,7 +160,7 @@ export default class FlightsStore {
                 arrivalDate: "2021-09-28T23:48:47.204Z",
                 departureTime: "19:10:26",
                 arrivalTime: "23:23:19",
-                id: 3,
+                id: 2,
                 placeOfDestinationId: 3,
                 departurePointId: 2,
                 airplaneId: 1,
@@ -191,8 +191,8 @@ export default class FlightsStore {
         makeAutoObservable(this);
     }
 
-    setPlaceOdDestinations(PlaceOdDestinations){
-        this._placeOfDestinations = PlaceOdDestinations;
+    setPlaceOfDestinations(PlaceOfDestinations){
+        this._placeOfDestinations = PlaceOfDestinations;
     }
 
     setDeparturePoints(DeparturePoints){
@@ -208,7 +208,7 @@ export default class FlightsStore {
         this._flights = Flights;
     }
 
-    get PlaceOdDestinations(){
+    get PlaceOfDestinations(){
         return this._placeOfDestinations;
     }
     get DeparturePoints(){

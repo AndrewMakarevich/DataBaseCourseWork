@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import './NavBar.css';
 import './AdaptiveMenuScript.js';
 import {observer} from 'mobx-react-lite';
-import { Context } from '..';
+import { Context } from '../index';
 const NavBar = observer(()=>{
     const {user} = useContext(Context);
     if(user.isAuth){

@@ -7,14 +7,14 @@ import UserStore from './store/UserStore';
 export const Context = createContext(null);
 
 ReactDOM.render(
-   <Context.Provider value={{
-     user: new UserStore(),
-     device: new FlightsStore()
-   }}>
-      <App />
-   </Context.Provider>,
+    <Context.Provider value={{
+      "user": new UserStore(),
+      "flight": new FlightsStore()
+    }}>
+        <App />
+    </Context.Provider>,
 
-  document.getElementById('root')
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,9 +1,10 @@
 import React from 'react';
+import FlightsList from '../components/FlightsList';
 
 const Flights = ()=>{
     return(
         <div>
-          FLIGHTS
+          <FlightsList/>
         </div>
     )
 }
