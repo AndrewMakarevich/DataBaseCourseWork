@@ -52,7 +52,7 @@ class ClientController{
         
     }
     async check(req, res, next){
-        res.json({message: "All right"});
+        // res.json({message: "All right"});
         const token = generateJwt(req.user.id,req.user.email,req.user.role);
         return res.json({token});
     }

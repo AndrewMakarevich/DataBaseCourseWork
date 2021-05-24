@@ -6,6 +6,7 @@ import UserStore from './store/UserStore';
 
 export const Context = createContext(null);
 
+
 ReactDOM.render(
     <Context.Provider value={{
       "user": new UserStore(),

@@ -1414,6 +1414,9 @@ export default class FlightsStore {
                 }
             },
         ];
+        this._pilots=[
+
+        ];
         makeAutoObservable(this);
     }
 
@@ -1433,6 +1436,9 @@ export default class FlightsStore {
     setFlights(Flights){
         this._flights = Flights;
     }
+    setPilots(Pilots){
+        this._pilots = Pilots;
+    }
 
     get PlaceOfDestinations(){
         return this._placeOfDestinations;
@@ -1448,5 +1454,8 @@ export default class FlightsStore {
     }
     get Flights(){
         return this._flights;
+    }
+    get Pilots(){
+        return this._pilots;
     }
 }
