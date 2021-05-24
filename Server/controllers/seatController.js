@@ -2,9 +2,9 @@ const {Seat} = require ('../models/models');
 class seatController{
     
     async create(req, res){
-        const {seatNumber, row, seatClass,airplaneId,ticketId} = req.body;
-        const seat = await Seat.create({seatNumber, row, seatClass,airplaneId,ticketId});
-        return res.json(seat);
+        // const {seatNumber, row, seatClass,airplaneId,ticketId} = req.body;
+        // const seat = await Seat.create({seatNumber, row, seatClass,airplaneId,ticketId});
+        // return res.json(seat);
     }
     async getAll(req, res){
         const {airplaneId} = req.query;

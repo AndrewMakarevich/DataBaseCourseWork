@@ -1,0 +1,49 @@
+.modalBackgroundPilot,
+.modalBackgroundAirplane,
+.modalBackgroundAirport,
+.modalBackgroundCrew{
+    background-color: rgb(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin-left: -8px;
+    top: 0px;
+}
+.modalWindowPilot,
+.modalWindowAirplane,
+.modalWindowAirport,
+.modalWindowCrew{
+    text-align: center;
+    height: 500px;
+    width:600px;
+    background-color: blanchedalmond;
+    margin: auto;
+    margin-top: 100px;
+}
+.modalWindowPilot h2,
+.modalWindowAirplane h2,
+.modalWindowAirport h2,
+.modalWindowCrew h2{
+    font-size: 25px;
+    display: inline-block;
+}
+.modalWindowPilot .pilotInput,
+.modalWindowAirplane .airplaneInput,
+.modalWindowAirport .airportInput{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.modalWindowPilot .pilotInput input,
+.modalWindowAirplane .airplaneInput input,
+.modalWindowAirport .airportInput input{
+    margin: 0px 10px 10px 10px;
+}
+
+
+.hide{
+    display: none;
+}
+.open{
+    display: block;
+}

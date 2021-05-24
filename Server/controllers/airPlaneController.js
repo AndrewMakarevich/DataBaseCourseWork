@@ -8,7 +8,21 @@ class airplaneController{
     async create(req, res){
         const {placeAmount, planeModel, crewId} = req.body;
         const airplane = await AirPlane.create({placeAmount, planeModel, crewId});
+        let seatClass;
+        let row;
+        for(let i=1; i<=placeAmount; i++){
+            row = Math.ceil(i/6);
+            if(i<13){
+                seatClass = "A";
+            }else if(i<25){
+                seatClass ="B";
+            }else{
+                seatClass ="C";
+            }
+             const seats = await Seat.create({seatNumber: i,seatClass: seatClass, row: row,airplaneId: airplane.id})
+        }
         return res.json(airplane);
+        
     }
     async getAll(req, res, next){
        const airplanes = await AirPlane.findAll();
