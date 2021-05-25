@@ -3,15 +3,17 @@ const currentLocation = function(e){
     const adminLocation = currentLocation.indexOf('/admin');
     if(adminLocation !== -1){
         try{
-            const pilotButton = document.querySelector('.PilotButton');
-            const airplaneButton = document.querySelector('.AirplaneButton');
-            const airportButton = document.querySelector('.AirportButton');
-            const crewButton = document.querySelector('.CrewButton');
+            const pilotButton = document.querySelector('.createButtons .PilotButton');
+            const airplaneButton = document.querySelector('.createButtons .AirplaneButton');
+            const airportButton = document.querySelector('.createButtons .AirportButton');
+            const crewButton = document.querySelector('.createButtons .CrewButton');
+            const flightButton = document.querySelector('.createButtons .FlightButton');
 
             const modalPilot = document.querySelector('.modalBackgroundPilot');
             const modalAirplane = document.querySelector('.modalBackgroundAirplane');
             const modalAirport = document.querySelector('.modalBackgroundAirport');
             const modalCrew = document.querySelector('.modalBackgroundCrew');
+            const modalFlight = document.querySelector('.modalBackgroundFlight');
             
             const openModal = (modal) =>{
                 modal.classList.add('open');
@@ -83,6 +85,21 @@ const currentLocation = function(e){
                     }
                 });
             });
+            flightButton.addEventListener('click',function(){
+                openModal(modalFlight);
+                modalFlight.addEventListener('click', function(e){
+
+                    if(e.target == modalFlight){
+                    closeModal(modalFlight);
+                    }
+                
+                });
+                document.addEventListener('keydown', function(e){
+                    if(e.key == 'Escape'){
+                        closeModal(modalFlight);
+                    }
+                });
+            });
 
 
             const closePilotButton = document.querySelector('.modalWindowPilot .closeModalButton');
@@ -101,6 +118,90 @@ const currentLocation = function(e){
             closeCrewButton.addEventListener('click', function(){
                 closeModal(modalCrew);
             });
+            const closeFlightButton = document.querySelector('.modalWindowFlight .closeModalButton');
+            closeFlightButton.addEventListener('click', function(){
+                closeModal(modalFlight);
+            });
+
+
+
+            const openTable = (table) =>{
+                table.classList.add('openTable');
+                table.classList.remove('hide');
+            };
+            const closeTable = (table) =>{
+                table.classList.remove('openTable');
+                table.classList.add('hide'); 
+            };
+
+            const checkPilotButton = document.querySelector('.checkButtons .PilotButton');
+            const pilotTable = document.querySelector('.pilotsTable');
+            const closePilotTableButton = document.querySelector('.pilotsTable .closeTableButton');
+
+            const checkAirplaneButton = document.querySelector('.checkButtons .AirplaneButton');
+            const airplaneTable = document.querySelector('.airplanesTable');
+            const closeAirplaneTableButton = document.querySelector('.airplanesTable .closeTableButton');
+           
+            const checkAirportButton = document.querySelector('.checkButtons .AirportButton');
+            const airportTable = document.querySelector('.airportsTable');
+            const closeAirportTableButton = document.querySelector('.airportsTable .closeTableButton');
+
+            const checkCrewButton = document.querySelector('.checkButtons .CrewButton');
+
+            const checkFlightButton = document.querySelector('.checkButtons .FlightButton');
+            const flightTable = document.querySelector('.flightsTable');
+            const closeFlightTableButton = document.querySelector('.flightsTable .closeTableButton');
+
+
+            checkPilotButton.addEventListener('click', function(){
+                openTable(pilotTable); 
+                closeTable(airplaneTable);   
+                closeTable(airportTable); 
+                closeTable(flightTable); 
+            });
+            closePilotTableButton.addEventListener('click', function(){
+                closeTable(pilotTable);
+            });
+
+
+            checkAirplaneButton.addEventListener('click', function(){
+                openTable(airplaneTable); 
+                closeTable(pilotTable);
+                closeTable(airportTable);  
+                closeTable(flightTable);     
+            });
+
+            closeAirplaneTableButton.addEventListener('click', function(){
+                closeTable(airplaneTable);
+            });
+
+
+            checkAirportButton.addEventListener('click', function(){
+                openTable(airportTable); 
+                closeTable(pilotTable);
+                closeTable(airplaneTable);
+                closeTable(flightTable);       
+            });
+            closeAirportTableButton.addEventListener('click', function(){
+                closeTable(airportTable);
+            });
+
+
+            checkFlightButton.addEventListener('click', function(){
+                openTable(flightTable); 
+                closeTable(pilotTable);
+                closeTable(airplaneTable);
+                closeTable(airportTable);      
+            });
+            closeFlightTableButton.addEventListener('click', function(){
+                closeTable(flightTable);
+            });
+
+
+
+
+
+
         
         }catch(error){
            console.log(error);

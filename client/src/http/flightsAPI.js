@@ -8,10 +8,26 @@ export const createPilot = async (pilotName, pilotSurname, workExperience, educa
     return alert('Пилот успешно создан');
 
 };
+
+export const getPilots = async () =>{
+
+    const {data} = await $host.get('api/pilot', {});
+    return data;
+
+};
+
+
 export const createAirplane = async (placeAmount, planeModel, crewId) =>{
 
     const {data} = await $authHost.post('api/airplane', {placeAmount, planeModel, crewId});
     return alert('Самолет успешно создан');
+
+};
+
+export const getAirplanes = async () =>{
+
+    const {data} = await $host.get('api/airplane', {});
+    return data;
 
 };
 
@@ -22,10 +38,51 @@ export const createAirport = async (airportName, airportCountry, airportAddress)
 
 };
 
+export const getAirports = async () =>{
+
+    const {data} = await $host.get('api/airport', {});
+    return data;
+
+};
+
 export const createCrew = async () =>{
 
     const {data} = await $authHost.post('api/crew', {});
     return alert(`Команда с id: ${data.id} успешно создан`);
+
+};
+export const getCrews = async () =>{
+
+    const {data} = await $host.get('api/crew', {});
+    return data;
+
+};
+
+export const getDeparturePoints = async () =>{
+
+    const {data} = await $host.get('api/departure', {});
+    return data;
+
+};
+
+export const getPlaceOfDestinations = async () =>{
+
+    const {data} = await $host.get('api/destination', {});
+    return data;
+
+};
+
+export const createFlight = async (departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId) =>{
+
+    const {data} = await $authHost.post('api/flight', {departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId});
+    return alert(`Рейс с id: ${data.id} успешно создан`);
+
+};
+
+export const getFlights = async () =>{
+
+    const {data} = await $host.get('api/flight', {});
+    return data;
 
 };
 

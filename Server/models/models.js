@@ -6,7 +6,7 @@ const Client = sequelize.define('client', {
       id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
       role:{type: DataTypes.STRING, defaultValue:"USER"}, 
       passportSeries:{type: DataTypes.INTEGER, unique: true, allowNull: true},
-      passportValidity:{type: DataTypes.DATE, allowNull: true},
+      passportValidity:{type: DataTypes.DATEONLY, allowNull: true},
       surname:{type: DataTypes.STRING, unique: true, allowNull: true},
       name:{type: DataTypes.STRING, unique: true, allowNull: true},
       email:{type: DataTypes.STRING, unique: true, allowNull: false},
@@ -45,8 +45,8 @@ const DeparturePoint = sequelize.define('departurePoint', {
 });
 
 const Flight = sequelize.define('flight', {
-    departureDate:{type: DataTypes.DATE, allowNull: false},
-    arrivalDate:{type: DataTypes.DATE, allowNull: false},
+    departureDate:{type: DataTypes.DATEONLY, allowNull: false},
+    arrivalDate:{type: DataTypes.DATEONLY, allowNull: false},
     departureTime:{type: DataTypes.TIME, allowNull: false},
     arrivalTime:{type: DataTypes.TIME, allowNull: false},
     id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true}, 

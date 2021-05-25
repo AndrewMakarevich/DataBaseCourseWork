@@ -1,7 +1,8 @@
 .modalBackgroundPilot,
 .modalBackgroundAirplane,
 .modalBackgroundAirport,
-.modalBackgroundCrew{
+.modalBackgroundCrew,
+.modalBackgroundFlight{
     background-color: rgb(0, 0, 0, 0.5);
     width: 100%;
     height: 100%;
@@ -12,7 +13,8 @@
 .modalWindowPilot,
 .modalWindowAirplane,
 .modalWindowAirport,
-.modalWindowCrew{
+.modalWindowCrew,
+.modalWindowFlight{
     text-align: center;
     height: 500px;
     width:600px;
@@ -23,13 +25,15 @@
 .modalWindowPilot h2,
 .modalWindowAirplane h2,
 .modalWindowAirport h2,
-.modalWindowCrew h2{
+.modalWindowCrew h2,
+.modalWindowFlight h2{
     font-size: 25px;
     display: inline-block;
 }
 .modalWindowPilot .pilotInput,
 .modalWindowAirplane .airplaneInput,
-.modalWindowAirport .airportInput{
+.modalWindowAirport .airportInput,
+.modalWindowFlight .flightInput{
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -39,11 +43,38 @@
 .modalWindowAirport .airportInput input{
     margin: 0px 10px 10px 10px;
 }
+.modalWindowPilot .pilotInput select,
+.modalWindowAirplane .airplaneInput select,
+.modalWindowAirport .airportInput select{
+    margin: 0px 10px 10px 10px;
+}
 
+
+
+
+.pilotsTable,
+.airplanesTable,
+.airportsTable,
+.flightsTable {
+    display:flex;
+} 
+.pilotsTable *,
+.airplanesTable *,
+.airportsTable *,
+.flightsTable *{
+    padding-left: 10px;
+    padding-bottom: 10px;
+} 
+.pilotsTable .closeTableButton{
+    display: block;
+}
 
 .hide{
     display: none;
 }
 .open{
     display: block;
+}
+.openTable{
+    display:flex;
 }
