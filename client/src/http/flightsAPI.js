@@ -2,6 +2,8 @@ import {$authHost, $host} from './index';
 import jwt_decode from "jwt-decode";
 
 
+
+
 export const createPilot = async (pilotName, pilotSurname, workExperience, education, crewId) =>{
 
     const {data} = await $authHost.post('api/pilot', {pilotName, pilotSurname, workExperience, education, crewId});
@@ -15,6 +17,14 @@ export const getPilots = async () =>{
     return data;
 
 };
+
+export const deletePilot = async (pilotId) =>{
+
+    const {data} = await $authHost.delete('api/pilot/' + pilotId);
+    return alert('Пилот успешно удален');
+
+};
+
 
 
 export const createAirplane = async (placeAmount, planeModel, crewId) =>{
@@ -72,10 +82,19 @@ export const getPlaceOfDestinations = async () =>{
 
 };
 
+// FLIGHT
+
 export const createFlight = async (departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId) =>{
 
     const {data} = await $authHost.post('api/flight', {departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId});
     return alert(`Рейс с id: ${data.id} успешно создан`);
+
+};
+
+export const getOneFlight = async (id) =>{
+
+    const {data} = await $host.get('api/flight/' + id);
+    return data;
 
 };
 

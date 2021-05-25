@@ -1,12 +1,17 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import { FLIGHT_ROUTE } from '../utils/consts';
+
 import './FlightItem.css';
 const FlightItem =({Flight, flight})=>{
-    const history = useHistory()
+    const history = useHistory();
+    const click = ()=>{
+        history.push(FLIGHT_ROUTE + '/' + Flight.id);
+    };
+    
     return(
         <div className="flight">
-            <button onClick={()=> history.push(FLIGHT_ROUTE + '/' + Flight.id)}> Подробнее</button>
+            <button onClick={click} > Подробнее</button>
             <div className="departureDate">
                 Departure date: <br/> {Flight.departureDate}
             </div>

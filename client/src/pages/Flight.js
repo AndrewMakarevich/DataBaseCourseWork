@@ -1,8 +1,12 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Context} from '../index';
 import "./Flight.css";
+import {getOneFlight} from '../http/flightsAPI';
+import { useParams } from 'react-router';
+import { observer } from 'mobx-react-lite';
 
-const Flight = ()=>{
+const Flight = observer(()=>{
+      const[currentFlight, setCurrentFlight] = useState('');
       const flightInfo = 
       {
         departureDate: "2021-07-28T06:18:45.063Z",
@@ -21,13 +25,23 @@ const Flight = ()=>{
         }
     };
           const {flight} = useContext(Context);
+          const {id} = useParams();
+
+          useEffect(()=>{
+            
+            getOneFlight(id).then(data=>setCurrentFlight(data));
+          },[]);
+          
+          
+          
     return(
         <div className="flightInfo">
-           <div>Flight ID: {flightInfo.id}</div>
+           <div>Flight ID: {currentFlight.id}</div>
+           <div>Flight ID: </div>
 
            <div className="departurePoint">
                 From: {flight.DeparturePoints.map(departure=>
-                      departure.id == flightInfo.departurePointId ?
+                      departure.id == currentFlight.departurePointId ?
                       <div key={departure.id}>
                         {departure.airport.airportName} <br/> ({departure.airport.airportCountry})
                       </div>
@@ -66,6 +80,6 @@ const Flight = ()=>{
 
 
     )
-}
+})
 
 export default Flight;

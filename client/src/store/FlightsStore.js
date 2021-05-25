@@ -93,6 +93,7 @@ export default class FlightsStore {
         this._flights =[
             
         ];
+        this._flight=[];
         this._pilots=[
         ];
         this._crews=[
@@ -364,6 +365,9 @@ export default class FlightsStore {
     setFlights(Flights){
         this._flights = Flights;
     }
+    setFlight(Flight){
+        this._flight = Flight;
+    }
     setPilots(Pilots){
         this._pilots = Pilots;
     }
@@ -386,6 +390,10 @@ export default class FlightsStore {
     get Flights(){
         return this._flights;
     }
+    get Flight(){
+        return this._flight;
+    }
+
     get Pilots(){
         return this._pilots;
     }

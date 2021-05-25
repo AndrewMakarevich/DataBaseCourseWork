@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react';
-import {createPilot,getPilots, createAirplane,getAirplanes, createAirport,getAirports, createCrew,getCrews, getDeparturePoints, getPlaceOfDestinations, createFlight, getFlights} from '../http/flightsAPI';
+import {createPilot,getPilots,deletePilot, createAirplane,getAirplanes, createAirport,getAirports, createCrew,getCrews, getDeparturePoints, getPlaceOfDestinations, createFlight, getFlights} from '../http/flightsAPI';
 import { Context } from '..';
 import './Admin.css';
 import './AdminModal.js';
@@ -11,6 +11,8 @@ const Admin = observer(()=>{
     const {flight} = useContext(Context);
     const {user} = useContext(Context);
     // PILOT
+
+    const [pilotId, setPilotId] = useState('');
     const [pilotName, setPilotName] = useState('');
     const [pilotSurname, setPilotSurname] = useState('');
     const [workExperience, setWorkExperience] = useState('');
@@ -43,7 +45,6 @@ const Admin = observer(()=>{
         if(e.target.className == "addPilotButton"){
             try{
                 let data;
-
                     // console.log(pilotName, pilotSurname, workExperience, education, crewId);
 
                     data = await createPilot(pilotName, pilotSurname, workExperience, education, crewId);
@@ -51,21 +52,17 @@ const Admin = observer(()=>{
                     getPilots().then(data => flight.setPilots(data));
 
                     // flight.setPilots(data);
-                    
-
             }catch(e){
                 // alert(e.response.data.message);
             }  
         }else if(e.target.className == "addAirplaneButton"){
             try{
                 let data;
-
                     data = await createAirplane(placeAmount, planeModel, crewId);
 
                     getAirplanes().then(data => flight.setAirplanes(data));
 
                     // flight.setAirplanes(data);
-
             }catch(e){
                 alert(e.response.data.message);
             } 
@@ -107,6 +104,11 @@ const Admin = observer(()=>{
             }catch(e){
                 alert(e.response.data.message);
             }
+        }else if(e.target.className == "deletePilotButton"){
+                console.log(e.target.id);
+                await deletePilot(e.target.id);
+                getPilots().then(data => flight.setPilots(data));
+                
         }
         
         
@@ -133,7 +135,11 @@ const Admin = observer(()=>{
     }, []);
 
 
+    
 
+   console.log(pilotId);
+    
+    
 
     return(
         <div>
@@ -158,10 +164,17 @@ const Admin = observer(()=>{
            
             <div className="pilotsTable hide">
                 <button className="closeTableButton">Close table</button>
+                <div className="delete">
+                        Удаление <br/>
+                    {flight.Pilots.map(pilot=>
+                        <div id ={pilot.id} className="deletePilotButton" onClick={click}>Удалить</div>
+                        )} 
+                    </div>
+                    
                     <div className="pilotsName">
                         Имя пилота <br/>
                     {flight.Pilots.map(pilot=>
-                        <div> {pilot.pilotName}</div>
+                        <div>{pilot.pilotName}</div>
                         )} 
                     </div>
                     <div className="pilotsSurname">
@@ -234,7 +247,7 @@ const Admin = observer(()=>{
                 </div>
             </div>
 
-            <div className = "flightsTable">
+            <div className = "flightsTable hide">
                 <button className="closeTableButton">Close table</button>
                 <div className="flightId">Идентификатор<br/>
                         {flight.Flights.map(flight=>

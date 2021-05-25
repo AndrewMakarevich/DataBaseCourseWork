@@ -28,6 +28,20 @@ class pilotController{
         res.json(pilot);
     }
 
+    async deleteOne(req,res){
+        try{
+            const {id} = req.params;
+            console.log('PILOT ID TO DELETE:'+ id);
+            await Pilot.destroy({
+                where:{id}
+            });
+            return res.json('Пилот успешно удален');
+        }catch(e){
+            console.log('ERROR:'+ e);
+        }
+        
+    }
+
 }
 
 module.exports = new pilotController();

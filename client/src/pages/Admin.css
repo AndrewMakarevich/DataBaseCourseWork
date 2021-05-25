@@ -64,10 +64,17 @@
 .flightsTable *{
     padding-left: 10px;
     padding-bottom: 10px;
+
 } 
 .pilotsTable .closeTableButton{
     display: block;
 }
+
+.deletePilotButton{
+    cursor: pointer;
+}
+
+
 
 .hide{
     display: none;

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './Auth.css';
 import {NavLink, useHistory, useLocation} from 'react-router-dom';
-import {REGISTRATION_ROUTE, LOGIN_ROUTE, FLIGHT_ROUTE} from '../utils/consts';
+import {REGISTRATION_ROUTE, LOGIN_ROUTE, FLIGHT_ROUTE, ADMIN_ROUTE} from '../utils/consts';
 import {login, registration} from '../http/userAPI';
 import { observer } from 'mobx-react-lite';
 import { Context } from '..';
@@ -27,7 +27,7 @@ const Auth = observer(()=>{
             user.setUser(data);
             
             user.setIsAuth(true); 
-            history.push(FLIGHT_ROUTE);
+            history.push(ADMIN_ROUTE);
         }catch(e){
             alert(e.response.data.message);
         }
