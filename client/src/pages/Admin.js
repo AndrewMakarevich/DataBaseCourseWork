@@ -403,7 +403,7 @@ const Admin = observer(()=>{
                         <select id="airplane" className="airplane" value={airplaneId} onChange={e=>setAirplaneId(e.target.value)}>
                             <option></option>
                             {flight.Airplanes.map(plane=>
-                                <option >{plane.id}</option>
+                                <option label ={plane.planeModel}>{plane.id}</option>
                                 )}
                         </select>
                   
