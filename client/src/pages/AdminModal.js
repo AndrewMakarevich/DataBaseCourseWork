@@ -199,10 +199,50 @@ const currentLocation = function(e){
 
 
 
+         // СКРИПТ ДЛЯ ПОЯВЛЕНИЯ МОДАЛЬНОГО ОКНА ПО ВНЕСЕНИЮ ИЗМЕНЕНИЙ В БАЗУ ДАННЫХ
+            const changePilotButton = document.querySelector('.changeButtons .PilotButton');
+            const changePilotPanel = document.querySelector('.changePilotPanel');
+
+            const changeAirplaneButton = document.querySelector('.changeButtons .AirplaneButton');
+            const changeAirplanePanel = document.querySelector('.changeAirplanePanel');
+
+            const changeAirportButton = document.querySelector('.changeButtons .AirportButton');
+            const changeAirportPanel = document.querySelector('.changeAirportPanel');
+
+            const changeFlightButton = document.querySelector('.changeButtons .FlightButton');
+            const changeFlightPanel = document.querySelector('.changeFlightPanel');
 
 
 
-        
+            changePilotButton.addEventListener('click', function(){
+                changePilotPanel.classList.toggle('hide');
+                closeModal(changeAirplanePanel);
+                closeModal(changeAirportPanel);
+                closeModal(changeFlightPanel);
+
+            });
+
+            changeAirplaneButton.addEventListener('click', function(){
+                changeAirplanePanel.classList.toggle('hide');
+                closeModal(changePilotPanel);
+                closeModal(changeAirportPanel);
+                closeModal(changeFlightPanel);
+            });
+
+            changeAirportButton.addEventListener('click', function(){
+                changeAirportPanel.classList.toggle('hide');
+                closeModal(changeAirplanePanel);
+                closeModal(changePilotPanel);
+                closeModal(changeFlightPanel);
+            });
+
+            changeFlightButton.addEventListener('click', function(){
+                changeFlightPanel.classList.toggle('hide');
+                closeModal(changeAirportPanel);
+                closeModal(changeAirplanePanel);
+                closeModal(changePilotPanel);
+            });
+
         }catch(error){
            console.log(error);
         }

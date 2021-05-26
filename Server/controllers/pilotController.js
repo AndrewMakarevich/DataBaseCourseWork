@@ -28,6 +28,22 @@ class pilotController{
         res.json(pilot);
     }
 
+    async changeOne(req, res){
+        try{
+            let {pilotName, pilotSurname, workExperience, education, crewId} = req.body;
+            console.log("THIS DATA:" + pilotName, pilotSurname, workExperience, education, crewId);
+            const {id} = req.params;
+            await Pilot.update(
+                {pilotName, pilotSurname, workExperience, education, crewId},
+                {where:{id}}
+            );
+            return res.json({message: "Пилот успешно отредактирован"});
+        }catch(e){
+            console.log("ERROR HANDLING:"+ e.message);
+        }
+        
+    }
+
     async deleteOne(req,res){
         try{
             const {id} = req.params;

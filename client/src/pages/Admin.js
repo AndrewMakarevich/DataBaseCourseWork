@@ -1,6 +1,11 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react';
-import {createPilot,getPilots,deletePilot, createAirplane,getAirplanes, createAirport,getAirports, createCrew,getCrews, getDeparturePoints, getPlaceOfDestinations, createFlight, getFlights} from '../http/flightsAPI';
+import {createPilot,getPilots,deletePilot,changePilot,
+      createAirplane,getAirplanes,deleteAirplane,changeAirplane,
+        createAirport,getAirports,deleteAirport,changeAirport,
+          createCrew,getCrews, getDeparturePoints,
+           getPlaceOfDestinations,
+            createFlight, getFlights, deleteFlight, changeFlight} from '../http/flightsAPI';
 import { Context } from '..';
 import './Admin.css';
 import './AdminModal.js';
@@ -12,30 +17,34 @@ const Admin = observer(()=>{
     const {user} = useContext(Context);
     // PILOT
 
+    
     const [pilotId, setPilotId] = useState('');
-    const [pilotName, setPilotName] = useState('');
-    const [pilotSurname, setPilotSurname] = useState('');
-    const [workExperience, setWorkExperience] = useState('');
-    const [education, setEducation] = useState('');
-    const [crewId, setCrewId] = useState('');
+    const [pilotName, setPilotName] = useState(undefined);
+    const [pilotSurname, setPilotSurname] = useState(undefined);
+    const [workExperience, setWorkExperience] = useState(undefined);
+    const [education, setEducation] = useState(undefined);
+    const [crewId, setCrewId] = useState(undefined);
 
     // AIRPLANE
-    const [placeAmount, setPlaceAmount] = useState('');
-    const [planeModel, setPlaneModel] = useState('');
+    const [airplaneId, setAirplaneId] = useState(undefined);
+    const [placeAmount, setPlaceAmount] = useState(undefined);
+    const [planeModel, setPlaneModel] = useState(undefined);
 
     // AIRPORT
-    const [airportName, setAirportName] = useState('');
-    const [airportCountry, setAirportCountry] = useState('');
-    const [airportAddress, setAirportAddress] = useState('');
+    const [airportId, setAirportId] = useState(undefined);
+    const [airportName, setAirportName] = useState(undefined);
+    const [airportCountry, setAirportCountry] = useState(undefined);
+    const [airportAddress, setAirportAddress] = useState(undefined);
 
     // FLIGHT
-    const [departureDate, setDepartureDate] = useState('');
-    const [arrivalDate, setArrivalDate] = useState('');
-    const [departureTime, setDepartureTime] = useState('');
-    const [arrivalTime, setArrivalTime] = useState('');
-    const [departurePointId, setDeparturePoint] = useState('');
-    const [placeOfDestinationId, setPlaceOfDestination] = useState('');
-    const [airplaneId, setAirplaneId] = useState('');
+    const [flightId, setFlightId] = useState(undefined);
+    const [departureDate, setDepartureDate] = useState(undefined);
+    const [arrivalDate, setArrivalDate] = useState(undefined);
+    const [departureTime, setDepartureTime] = useState(undefined);
+    const [arrivalTime, setArrivalTime] = useState(undefined);
+    const [departurePointId, setDeparturePoint] = useState(undefined);
+    const [placeOfDestinationId, setPlaceOfDestination] = useState(undefined);
+    
 
 
 
@@ -105,10 +114,86 @@ const Admin = observer(()=>{
                 alert(e.response.data.message);
             }
         }else if(e.target.className == "deletePilotButton"){
-                console.log(e.target.id);
+            const confirming = window.confirm("Вы уверены, что хотите удалить данного пилота?");
+            if(confirming){
                 await deletePilot(e.target.id);
                 getPilots().then(data => flight.setPilots(data));
+            }else{
+                return
+            }
                 
+                
+                
+        }else if(e.target.className == "deleteAirportButton"){
+            const confirming = window.confirm("Вы уверены, что хотите удалить данный аэропорт?");
+            if(confirming){
+                await deleteAirport(e.target.id);
+                getAirports().then(data=> flight.setAirports(data));  
+            }else{
+                return
+            }
+            
+            
+        }else if(e.target.className == "deleteAirplaneButton"){
+            const confirming = window.confirm("Вы уверены, что хотите удалить данный самолет?");
+            if(confirming){
+                await deleteAirplane(e.target.id);
+                getAirplanes().then(data => flight.setAirplanes(data));  
+            }else{
+                return
+            }
+            
+            
+        }else if(e.target.className == "deleteFlightButton"){
+            const confirming = window.confirm("Вы уверены, что хотите удалить данный рейс?");
+            if(confirming){
+               await deleteFlight(e.target.id);
+                getFlights().then(data => flight.setFlights(data)); 
+            }else{
+                return
+            }
+            
+            
+        }else if(e.target.className == "changePilotButton"){
+            const confirming = window.confirm("Вы уверены, что хотите внести изменения?");
+            if(confirming){
+               await changePilot(pilotId, pilotName, pilotSurname, workExperience, education, crewId);
+               getPilots().then(data => flight.setPilots(data));
+            }else{
+                return
+            }
+            
+            
+        }else if(e.target.className == "changeAirplaneButton"){
+            const confirming = window.confirm("Вы уверены, что хотите внести изменения?");
+            if(confirming){
+               await changeAirplane(airplaneId, planeModel, crewId);
+               getAirplanes().then(data => flight.setAirplanes(data));
+            }else{
+                return
+            }
+            
+            
+        }else if(e.target.className == "changeAirportButton"){
+            const confirming = window.confirm("Вы уверены, что хотите внести изменения?");
+            if(confirming){
+               await changeAirport(airportId,airportName, airportCountry, airportAddress);
+               getAirports().then(data=> flight.setAirports(data));
+            }else{
+                return
+            }
+            
+            
+        }else if(e.target.className == "changeFlightButton"){
+            const confirming = window.confirm("Вы уверены, что хотите внести изменения?");
+            if(confirming){
+               await changeFlight(flightId,departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId);
+               getFlights().then(data => flight.setFlights(data));
+            }else{
+                return
+            }
+            
+            
         }
         
         
@@ -134,22 +219,16 @@ const Admin = observer(()=>{
 
     }, []);
 
-
     
-
-   console.log(pilotId);
-    
-    
-
     return(
-        <div>
+        <div className="adminPanel">
             <div className="adminEmail">Admin email: {user._user.email}</div>
             <div className="createButtons">
-                <button className="PilotButton">Добавить пилота</button>
-                <button className="AirplaneButton">Добавить самолет</button>
-                <button className="AirportButton">Добавить аэропорт</button>
-                <button className="CrewButton">Добавить команду</button>  
-                <button className="FlightButton">Добавить рейс</button>  
+                <button className="PilotButton"><span></span>Добавить пилота</button>
+                <button className="AirplaneButton"><span></span>Добавить самолет</button>
+                <button className="AirportButton"><span></span>Добавить аэропорт</button>
+                <button className="CrewButton"><span></span>Добавить команду</button>  
+                <button className="FlightButton"><span></span>Добавить рейс</button>  
             </div>
             <div className="checkButtons">
                 <button className="PilotButton">Таблица пилотов</button>
@@ -158,6 +237,7 @@ const Admin = observer(()=>{
                 <button className="CrewButton">Таблица команд</button>  
                 <button className="FlightButton">Таблица рейсов</button>
             </div>
+            
            
 
            
@@ -206,6 +286,11 @@ const Admin = observer(()=>{
                 
             <div className = "airplanesTable hide">
                 <button className="closeTableButton">Close table</button>
+                <div className="delete">Удаление<br/>
+                        {flight.Airplanes.map(airplane=>
+                            <div id={airplane.id} className="deleteAirplaneButton" onClick={click}>Удалить</div>
+                            )}
+                </div>
                 <div className="airplnaId">Идентификатор<br/>
                         {flight.Airplanes.map(airplane=>
                             <div>{airplane.id}</div>
@@ -230,6 +315,11 @@ const Admin = observer(()=>{
 
             <div className = "airportsTable hide">
                 <button className="closeTableButton">Close table</button>
+                <div className="delete">Удаление<br/>
+                        {flight.Airports.map(airport=>
+                                <div id={airport.id} className="deleteAirportButton" onClick={click}>Удалить</div>
+                            )}
+                </div>
                 <div className="airportName">Название аэропорта<br/>
                         {flight.Airports.map(airport=>
                                 <div>{airport.airportName}</div>
@@ -249,6 +339,11 @@ const Admin = observer(()=>{
 
             <div className = "flightsTable hide">
                 <button className="closeTableButton">Close table</button>
+                <div className="delete">Удаление<br/>
+                        {flight.Flights.map(flight=>
+                                <div id={flight.id} className="deleteFlightButton" onClick={click}>Удалить</div>
+                            )}
+                </div> 
                 <div className="flightId">Идентификатор<br/>
                         {flight.Flights.map(flight=>
                                 <div>{flight.id}</div>
@@ -340,6 +435,7 @@ const Admin = observer(()=>{
                             
                             <label for="crewId">Выберите команду, обслуживающую самолет</label>
                             <select id="crewId" value={crewId} onChange={e=>setCrewId(e.target.value)}>
+                                <option></option>
                                 {flight.Crews.map(crew=>
                                 <option>{crew.id}</option>
                                     )}
@@ -360,6 +456,7 @@ const Admin = observer(()=>{
                             
                             <label for="airportCountry">Введите страну аэропорта</label>
                             <select id="airportCountry" value={airportCountry} onChange={e=>setAirportCountry(e.target.value)}>
+                                <option></option>
                                 {flight.Countries.map(country=>
                                 <option>{country.name}</option>
                                     )}
@@ -426,6 +523,241 @@ const Admin = observer(()=>{
                    <button className="closeModalButton">Close</button>
                </div>
            </div>
+           
+           <div className="changeButtons">
+                <button className="PilotButton">Изменить пилота</button>
+                <button className="AirplaneButton">Изменить самолет</button>
+                <button className="AirportButton">Изменить аэропорт</button>
+                <button className="CrewButton">Изменить команд</button>  
+                <button className="FlightButton">Изменить рейс</button>
+            </div>
+            
+            <div className="changePilotPanel hide">
+                            <select id="pilotId" value={pilotId} onChange={e=>setPilotId(e.target.value)}>
+                                <option></option>
+                                {flight.Pilots.map(pilot=>
+                                <option>{pilot.id}</option>
+                                    )}
+                                
+                            </select>
+                            <input type="text" id="pilotName" placeholder="Введите имя пилота" required value={pilotName} onChange={e=>{
+                                    if(e.target.value == ''){
+                                        return(setPilotName(undefined))                                   
+                                    }else{
+                                        return(setPilotName(e.target.value))
+                                    }
+                                }}></input>    
+                            <input type="text" id="pilotSurname" placeholder="Введите фамилию пилота" required value={pilotSurname} onChange={e=>{
+                                    if(e.target.value == ''){
+                                        return(setPilotSurname(undefined))
+                                    }else{
+                                        return(setPilotSurname(e.target.value))  
+                                    }                                    
+                                }                                
+                                }></input>
+                            <input type="text" id="workExperience" placeholder="Введите стаж пилота (лет)" required value={workExperience} onChange={e=>{
+                                    if(e.target.value == ''){
+                                        return(setWorkExperience(undefined))
+                                    }else{
+                                        return(setWorkExperience(e.target.value))
+                                    }    
+                                }}></input>
+                            <input type="text" id="education" placeholder="Введите образование пилота" required value={education} onChange={e=>{
+                                    if(e.target.value == ''){
+                                        return(setEducation(undefined))
+                                    }else{
+                                        return(setEducation(e.target.value)) 
+                                    }
+                                }}></input>
+                            <label for="crewId">Выберите команду пилота</label>
+                            <select id="crewId" value={crewId} onChange={e=>{
+                                    if(e.target.value ==''){
+                                        return(setCrewId(undefined))
+                                    }else{
+                                        return(setCrewId(e.target.value))
+                                    }
+                                }}>
+                                <option></option>
+                                {flight.Crews.map(crew=>
+                                <option>{crew.id}</option>
+                                    )}
+                            </select>
+                            <button className="changePilotButton" onClick={click}>Внести изменения</button>
+            </div>
+
+            <div className ="changeAirplanePanel hide">
+                            <select id="airplaneId" value={airplaneId} onChange={e=>setAirplaneId(e.target.value)}>
+                                <option></option>
+                                {flight.Airplanes.map(airplane=>
+                                <option>{airplane.id}</option>
+                                    )}
+                                                
+                            </select>
+                            {/* <input type="text" id="placeAmount" placeholder="Введите кол-во мест в самолете" required value={placeAmount} onChange={e=>setPlaceAmount(e.target.value)}></input> */}
+                            <input type="text" id="planeModel" placeholder="Введите модель самолета" required value={planeModel} onChange={e=>{
+                                    if(e.target.value==''){
+                                            setPlaneModel(undefined)
+                                    }else{
+                                            setPlaneModel(e.target.value)
+                                    }
+                                }}></input>
+                            
+                            <label for="crewId">Выберите команду, обслуживающую самолет</label>
+                            <select id="crewId" value={crewId} onChange={e=>{
+                                    if(e.target.value ==''){
+                                        setCrewId(undefined)
+                                    }else{
+                                        setCrewId(e.target.value)
+                                    }
+                                }}>
+                                <option></option>
+                                {flight.Crews.map(crew=>
+                                <option>{crew.id}</option>
+                                    )}
+                            </select>
+                            <button className="changeAirplaneButton" onClick={click}>Внести изменения</button>
+
+            </div>
+        
+            <div className="changeAirportPanel hide">
+                            <select id="airportCountry" value={airportId} onChange={e=>setAirportId(e.target.value)}>
+                                                <option></option>
+                                                {flight.Airports.map(airport=>
+                                                <option>{airport.id}</option>
+                                                    )}
+                            </select>
+                            <input type="text" id="airportName" placeholder="Введите название аэропорта" required value={airportName} onChange={e=>{
+                                    if(e.target.value==''){
+                                       setAirportName(undefined) 
+                                    }else{
+                                       setAirportName(e.target.value)
+                                    }    
+                                }
+                            }></input>
+                            <label for="airportCountry">Введите страну аэропорта</label>
+                            <select id="airportCountry" value={airportCountry} onChange={e=>{
+                                    if(e.target.value==''){
+                                        setAirportCountry(undefined)
+                                    }else{
+                                        setAirportCountry(e.target.value)
+                                    }    
+                                }
+                            }>
+                                <option></option>
+                                {flight.Countries.map(country=>
+                                <option>{country.name}</option>
+                                    )}
+                            </select>
+
+                            <input type="text" id="airportAddress" placeholder="Введите адрес аэропорта (город включительно)" required value={airportAddress} onChange={e=>{
+                                    if(e.target.value==''){
+                                        setAirportAddress(undefined) 
+                                    }else{
+                                        setAirportAddress(e.target.value)
+                                    }
+                                    
+                                }
+                            }></input>
+
+                            <button className="changeAirportButton" onClick={click}>Внести изменения</button>
+            </div>
+        
+            <div className="changeFlightPanel hide">
+                        <select className="flightId" value={flightId} onChange={e=>setFlightId(e.target.value)}>
+                                        <option></option>
+                                        {flight.Flights.map(flight=>
+                                            <option>{flight.id}</option>
+                                            )}
+                        </select>
+                       
+                        <label for="departureDate">Дата отбытия</label>
+                        <input id="departureDate" type="date" className="departureDate" value={departureDate} onChange={e=>{
+                                if(e.target.value==''){
+                                    setDepartureDate(undefined)
+                                }else{
+                                    setDepartureDate(e.target.value)
+                                }
+                                                        
+                        }}></input>
+                        
+                        <label for="departureTime">Время отбытия</label>
+                        <input id="departureTime" type="time" className="departureTime" value={departureTime} onChange={e=>{
+                            if(e.target.value==''){
+                                setDepartureTime(undefined)
+                            }else{
+                                setDepartureTime(e.target.value)
+                            }
+                        }
+                            }></input>
+                        
+                        <label for="arrivalDate">Дата прибытия</label>
+                        <input id="arrivalDate" type="date" className="arrivalDate" value={arrivalDate} onChange={e=>{
+                                if(e.target.value==''){
+                                    setArrivalDate(undefined)
+                                }else{
+                                    setArrivalDate(e.target.value)
+                                }
+                        }}></input>
+
+                        <label for="arrivalTime">Время прибытия</label>
+                        <input id="arrivalTime" type="time" className="arrivalTime" value={arrivalTime} onChange={e=>{
+                                if(e.target.value==''){
+                                    setArrivalTime(undefined)
+                                }else{
+                                    setArrivalTime(e.target.value)
+                                }
+                            }
+                        }></input>
+
+                        <label for="departurePoint">Место отправления</label>
+                        <select id="departurePoint" className="departurePoint" value={departurePointId} onChange={e=>{
+                                    if(e.target.value==''){
+                                        setDeparturePoint(undefined)
+                                    }else{
+                                        setDeparturePoint(e.target.value)
+                                    }
+                                }
+                            }>
+                            <option></option>
+                            {flight.DeparturePoints.map(departure=>
+                               
+                                <option label ={departure.airport.airportName}>{departure.id}</option>
+                                )}
+                        </select>
+                        
+                        <label for="placeOfDestination">Место назначения</label>
+                        <select id="placeOfDestination" className="placeOfDestination" value={placeOfDestinationId} onChange={e=>{
+                            
+                                    if(e.target.value==''){
+                                        setPlaceOfDestination(undefined)
+                                    }else{
+                                        setPlaceOfDestination(e.target.value)
+                                    }
+                                }
+                            }>
+                            <option></option>
+                            {flight.PlaceOfDestinations.map(destination=>
+                                    <option label={destination.airport.airportName} >{destination.id}</option>
+                                    )}
+                        </select>
+
+                        <label for="airplane">Обслуживающий самолет</label>
+                        <select id="airplane" className="airplane" value={airplaneId} onChange={e=>{
+                                    if(e.target.value==''){
+                                        setAirplaneId(undefined) 
+                                    }else{
+                                        setAirplaneId(e.target.value) 
+                                    }
+                                }       
+                            }>
+                            <option></option>
+                            {flight.Airplanes.map(plane=>
+                                <option label ={plane.planeModel}>{plane.id}</option>
+                                )}
+                        </select>
+            
+                        <button className="changeFlightButton" onClick={click}>Внести изменения</button>     
+            </div>
         </div>
     )
 });

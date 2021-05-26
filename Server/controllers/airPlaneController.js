@@ -28,6 +28,7 @@ class airplaneController{
        const airplanes = await AirPlane.findAll();
        return res.json(airplanes);
     }
+
     async getOne(req, res){
         const {id}= req.params;
         const airplane = await AirPlane.findOne({
@@ -36,6 +37,35 @@ class airplaneController{
         });
         return res.json(airplane);
     }
+
+    async deleteOne(req, res){
+        const {id}= req.params;
+        let airplaneName;
+        await Seat.destroy({
+            where:{airplaneId: id}
+        });
+        const airplane = await AirPlane.findOne({
+            where:{id}
+        });
+        airplaneName = airplane.planeModel;
+        await AirPlane.destroy({
+            where:{id}
+        });
+        return res.json({message:`Самолет ${airplaneName} успешно удален`});
+    }
+
+    async changeOne(req, res){
+        const {id} = req.params;
+        const {planeModel, crewId} = req.body;
+        await AirPlane.update(
+            {planeModel, crewId},
+            {where:{id}}
+        );
+        return res.json({message: "Самолет успешно изменен"});
+
+    }
+
+
 
 }
 

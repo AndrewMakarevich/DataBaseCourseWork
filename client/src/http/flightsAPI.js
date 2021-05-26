@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 
 
 
-
+// PILOT'S API
 export const createPilot = async (pilotName, pilotSurname, workExperience, education, crewId) =>{
 
     const {data} = await $authHost.post('api/pilot', {pilotName, pilotSurname, workExperience, education, crewId});
@@ -24,8 +24,14 @@ export const deletePilot = async (pilotId) =>{
     return alert('Пилот успешно удален');
 
 };
+export const changePilot = async (pilotId,pilotName, pilotSurname, workExperience, education, crewId) =>{
 
+    const {data} = await $authHost.put('api/pilot/'+pilotId,{pilotName, pilotSurname, workExperience, education, crewId});
+    return alert(data.message);
 
+};
+
+// AIRPLANE'S API
 
 export const createAirplane = async (placeAmount, planeModel, crewId) =>{
 
@@ -41,6 +47,24 @@ export const getAirplanes = async () =>{
 
 };
 
+export const deleteAirplane = async (id) =>{
+
+    const {data} = await $authHost.delete('api/airplane/'+id);
+    return alert(data.message);
+
+};
+
+export const changeAirplane = async (airplaneId, planeModel, crewId) =>{
+
+    const {data} = await $authHost.put('api/airplane/'+airplaneId, {planeModel, crewId});
+    return alert(data.message);
+
+};
+
+
+
+// AIRPORT'S API
+
 export const createAirport = async (airportName, airportCountry, airportAddress) =>{
 
     const {data} = await $authHost.post('api/airport', {airportName, airportCountry, airportAddress});
@@ -54,6 +78,22 @@ export const getAirports = async () =>{
     return data;
 
 };
+
+export const deleteAirport = async (id) =>{
+
+    const {data} = await $authHost.delete('api/airport/'+id);
+    return alert(data.message);
+
+};
+
+export const changeAirport = async (airportId, airportName, airportCountry, airportAddress) =>{
+
+    const {data} = await $authHost.put('api/airport/'+airportId, {airportName, airportCountry, airportAddress});
+    return alert(data.message);
+
+};
+
+// CREW'S API
 
 export const createCrew = async () =>{
 
@@ -102,6 +142,18 @@ export const getFlights = async () =>{
 
     const {data} = await $host.get('api/flight', {});
     return data;
+
+};
+export const deleteFlight = async (id) =>{
+
+    const {data} = await $authHost.delete('api/flight/' + id);
+    return alert(data.message);
+
+};
+export const changeFlight = async (flightId,departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId) =>{
+
+    const {data} = await $authHost.put('api/flight/'+flightId, {departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId});
+    return alert(data.message);
 
 };
 

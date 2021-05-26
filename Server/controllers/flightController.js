@@ -26,6 +26,24 @@ class flightController{
         return res.json(flight);
     }
 
+    async deleteOne(req,res){
+      const {id} = req.params;
+      await Flight.destroy({
+        where:{id}
+      });
+      return res.json({message:"Рейс успешно удален"});
+    }
+
+    async changeOne(req, res){
+      const{id} = req.params;
+      const {departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId} = req.body;
+      await Flight.update(
+        {departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId},
+        {where:{id}}
+      );
+      return res.json({message: "Рейс успешно изменен"});
+    }
+
 }
 
 module.exports = new flightController();

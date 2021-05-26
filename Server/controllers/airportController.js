@@ -1,6 +1,7 @@
 const {Airport} = require ('../models/models');
 const {DeparturePoint} = require ('../models/models');
 const {PlaceOfDestination} = require ('../models/models.js');
+const {Flight} = require ('../models/models.js');
 
 class airportController{
     
@@ -23,6 +24,38 @@ class airportController{
                 where:{id}
             });
         return res.json(airport);
+    }
+
+    async deleteOne(req, res){
+        const {id} = req.params;
+        await DeparturePoint.destroy({
+            where:{airportId: id}
+        });
+        await PlaceOfDestination.destroy({
+            where: {airportId: id}
+        });
+        await Airport.destroy({
+            where:{id}
+        });
+        
+        // await Flight.destroy({
+        //     where: {placeOfDestinationId: id}
+        // });
+        // await Flight.destroy({
+        //     where: {departurePointId: id}
+        // });
+
+        return res.json({message: "Аэропорт успешно удален"});
+    }
+
+    async changeOne(req, res){
+        const {id} = req.params;
+        const {airportName, airportCountry, airportAddress} = req.body;
+        await Airport.update(
+            {airportName, airportCountry, airportAddress},
+            {where:{id}}
+        );
+        return res.json({message: "Аэропорт успешно изменен"});
     }
 
 }

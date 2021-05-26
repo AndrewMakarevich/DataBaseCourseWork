@@ -3,88 +3,8 @@ import {makeAutoObservable} from 'mobx';
 export default class FlightsStore {
     constructor(){
         this._placeOfDestinations = [
-            {
-                id: 1,
-                airportId: 1,
-                airport: {
-                    id: 1,
-                    airportName: "Greenfelderchester",
-                    airportCountry: "Antarctica",
-                    airportAddress: "74899 Brakus Terrace",
-                }
-            },
-            {
-                id: 2,
-                airportId: 2,
-                airport: {
-                    id: 2,
-                    airportName: "New Ernesttown",
-                    airportCountry: "Panama",
-                    airportAddress: "96394 Cloyd Parkway",
-                }
-            },
-            {
-                id: 3,
-                airportId: 3,
-                airport: {
-                    id: 3,
-                    airportName: "East Korystad",
-                    airportCountry: "Panama Canal Zone",
-                    airportAddress: "6959 Hunter Station",
-                }
-            },
-            {
-                id: 4,
-                airportId: 4,
-                airport: {
-                    id: 4,
-                    airportName: "Sanfordton",
-                    airportCountry: "Finland",
-                    airportAddress: "5293 Brandi Curve",
-                }
-            }
         ];
         this._departurePoints =[
-            {
-                id: 1,
-                airportId: 1,
-                airport: {
-                    id: 1,
-                    airportName: "Greenfelderchester",
-                    airportCountry: "Antarctica",
-                    airportAddress: "74899 Brakus Terrace",
-                }
-            },
-            {
-                id: 2,
-                airportId: 2,
-                airport: {
-                    id: 2,
-                    airportName: "New Ernesttown",
-                    airportCountry: "Panama",
-                    airportAddress: "96394 Cloyd Parkway",
-                }
-            },
-            {
-                id: 3,
-                airportId: 3,
-                airport: {
-                    id: 3,
-                    airportName: "East Korystad",
-                    airportCountry: "Panama Canal Zone",
-                    airportAddress: "6959 Hunter Station",
-                }
-            },
-            {
-                id: 4,
-                airportId: 4,
-                airport: {
-                    id: 4,
-                    airportName: "Sanfordton",
-                    airportCountry: "Finland",
-                    airportAddress: "5293 Brandi Curve",
-                }
-            }
         ];
         this._airplanes =[
         ];
