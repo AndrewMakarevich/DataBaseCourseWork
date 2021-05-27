@@ -9,6 +9,7 @@ import {createPilot,getPilots,deletePilot,changePilot,
 import { Context } from '..';
 import './Admin.css';
 import './AdminModal.js';
+import './AdminSearch.js';
 import { useHistory } from 'react-router';
 import { ADMIN_ROUTE } from '../utils/consts';
 
@@ -24,17 +25,20 @@ const Admin = observer(()=>{
     const [workExperience, setWorkExperience] = useState(undefined);
     const [education, setEducation] = useState(undefined);
     const [crewId, setCrewId] = useState(undefined);
+    const [pilotParametr, setPilotParametr] = useState(undefined);
 
     // AIRPLANE
     const [airplaneId, setAirplaneId] = useState(undefined);
     const [placeAmount, setPlaceAmount] = useState(undefined);
     const [planeModel, setPlaneModel] = useState(undefined);
+    const [airplaneParametr, setAirplaneParametr] = useState(undefined);
 
     // AIRPORT
     const [airportId, setAirportId] = useState(undefined);
     const [airportName, setAirportName] = useState(undefined);
     const [airportCountry, setAirportCountry] = useState(undefined);
     const [airportAddress, setAirportAddress] = useState(undefined);
+    const [airportParametr, setAirportParametr] = useState(undefined);
 
     // FLIGHT
     const [flightId, setFlightId] = useState(undefined);
@@ -44,6 +48,8 @@ const Admin = observer(()=>{
     const [arrivalTime, setArrivalTime] = useState(undefined);
     const [departurePointId, setDeparturePoint] = useState(undefined);
     const [placeOfDestinationId, setPlaceOfDestination] = useState(undefined);
+    const [flightParametr, setFlightParametr] = useState(undefined);
+    const [flightDateParametr, setFlightDateParametr] = useState(undefined);
     
 
 
@@ -199,6 +205,21 @@ const Admin = observer(()=>{
         
     };
 
+    const searchClick = async(e) =>{
+        if(e.target.className == "SearchPilotButton"){
+            getPilots("?parametr="+pilotParametr).then(data=> flight.setPilots(data));
+        }else if(e.target.className == "SearchAirplaneButton"){
+            getAirplanes("?parametr="+airplaneParametr).then(data=> flight.setAirplanes(data));
+        }else if(e.target.className == "SearchAirportButton"){
+            getAirports("?parametr="+airportParametr).then(data=> flight.setAirports(data));
+        }else if(e.target.className == "SearchFlightButton"){
+            getFlights("?parametr="+flightParametr).then(data => flight.setFlights(data));
+        }else if(e.target.className == "SearchFlightDateButton"){
+            getFlights("?parametr="+flightDateParametr).then(data => flight.setFlights(data));
+        }else if(e.target.className == "showAllFlights"){
+            getFlights().then(data => flight.setFlights(data));
+        }
+    }
     useEffect(()=>{
 
         getPilots().then(data => flight.setPilots(data));
@@ -243,6 +264,15 @@ const Admin = observer(()=>{
            
            
             <div className="pilotsTable hide">
+                <div className="openSearchPilotButton">Поиск</div>
+                <div className="searchPilotPanel hide">
+                    <input className="searchPilot"  placeholder="Параметр поиска" value={pilotParametr} onChange={e=>setPilotParametr(e.target.value)}></input>
+                    <button className="SearchPilotButton" onClick={searchClick}>Найти</button>
+                    <button className="closeSearchButton">close</button>
+                </div>
+
+
+
                 <button className="closeTableButton">Close table</button>
                 <div className="delete">
                         Удаление <br/>
@@ -250,41 +280,54 @@ const Admin = observer(()=>{
                         <div id ={pilot.id} className="deletePilotButton" onClick={click}>Удалить</div>
                         )} 
                     </div>
+                    <div className="pilotsId">
+                        Идентификатор <br/>
+                    {flight.Pilots.map(pilot=>
+                        <div className="tableCell">{pilot.id}</div>
+                        )} 
+                    </div>
                     
                     <div className="pilotsName">
                         Имя пилота <br/>
                     {flight.Pilots.map(pilot=>
-                        <div>{pilot.pilotName}</div>
+                        <div className="tableCell">{pilot.pilotName}</div>
                         )} 
                     </div>
                     <div className="pilotsSurname">
                         Фамилия пилота <br/>
                     {flight.Pilots.map(pilot=>
-                        <div> {pilot.pilotSurname}</div>
+                        <div className="tableCell"> {pilot.pilotSurname}</div>
                         )}  
                     </div>
                     <div className="pilotsWorkExperience">
                         Стаж пилота <br/>
                     {flight.Pilots.map(pilot=>
-                        <div> {pilot.workExperience}</div>
+                        <div className="tableCell"> {pilot.workExperience}</div>
                         )}  
                     </div>
                     <div className="pilotsEducation">
                         Образование пилота <br/>
                     {flight.Pilots.map(pilot=>
-                        <div> {pilot.education}</div>
+                        <div className="tableCell"> {pilot.education}</div>
                         )}  
                     </div>
                     <div className="pilotsCrew">
                         Команда пилота <br/>
                     {flight.Pilots.map(pilot=>
-                        <div> {pilot.crewId}</div>
+                        <div className="tableCell"> {pilot.crewId}</div>
                         )}  
                     </div>
                     
                 </div>
                 
             <div className = "airplanesTable hide">
+                <div className="openSearchAirplaneButton">Поиск</div>
+                    <div className="searchAirplanePanel hide">
+                        <input className="searchAirplane"  placeholder="Параметр поиска" value={airplaneParametr} onChange={e=>setAirplaneParametr(e.target.value)}></input>
+                        <button className="SearchAirplaneButton" onClick={searchClick}>Найти</button>
+                        <button className="closeSearchButton">close</button>
+                </div> 
+
                 <button className="closeTableButton">Close table</button>
                 <div className="delete">Удаление<br/>
                         {flight.Airplanes.map(airplane=>
@@ -293,51 +336,80 @@ const Admin = observer(()=>{
                 </div>
                 <div className="airplnaId">Идентификатор<br/>
                         {flight.Airplanes.map(airplane=>
-                            <div>{airplane.id}</div>
+                            <div className="tableCell">{airplane.id}</div>
                             )}
                 </div>
                 <div className="placeAmount">Ко-во мест<br/>
                         {flight.Airplanes.map(airplane=>
-                            <div>{airplane.placeAmount}</div>
+                            <div className="tableCell">{airplane.placeAmount}</div>
                             )}
                 </div>
                 <div className="planeModel">Модель самолета<br/>
                         {flight.Airplanes.map(airplane=>
-                                <div>{airplane.planeModel}</div>
+                                <div className="tableCell">{airplane.planeModel}</div>
                                 )}
                 </div>
                 <div className="crewId">Команда самолета<br/>
                         {flight.Airplanes.map(airplane=>
-                                <div>{airplane.crewId}</div>
+                                <div className="tableCell">{airplane.crewId}</div>
                                 )}
                 </div>
             </div>
 
             <div className = "airportsTable hide">
+
+                <div className="openSearchAirportButton">Поиск</div>
+                        <div className="searchAirportPanel hide">
+                            <input className="searchAirport"  placeholder="Параметр поиска" value={airportParametr} onChange={e=>setAirportParametr(e.target.value)}></input>
+                            <button className="SearchAirportButton" onClick={searchClick}>Найти</button>
+                            <button className="closeSearchButton">close</button>
+                </div> 
                 <button className="closeTableButton">Close table</button>
                 <div className="delete">Удаление<br/>
                         {flight.Airports.map(airport=>
                                 <div id={airport.id} className="deleteAirportButton" onClick={click}>Удалить</div>
                             )}
                 </div>
-                <div className="airportName">Название аэропорта<br/>
+                <div className="airportId">Идентификатор<br/>
                         {flight.Airports.map(airport=>
-                                <div>{airport.airportName}</div>
+                                <div className="tableCell">{airport.id}</div>
                             )}
                 </div>
-                <div className="airportName">Страна<br/>
+                <div className="airportName"> Название аэропорта<br/>
                         {flight.Airports.map(airport=>
-                                <div>{airport.airportCountry}</div>
+                                <div className="tableCell">{airport.airportName}</div>
+                            )}
+                </div>
+                <div className="airportName"> Страна<br/>
+                        {flight.Airports.map(airport=>
+                                <div className="tableCell">{airport.airportCountry}</div>
                             )}
                 </div>
                 <div className="airportAddress">Адрес<br/>
                         {flight.Airports.map(airport=>
-                                <div>{airport.airportAddress}</div>
+                                <div className="tableCell">{airport.airportAddress}</div>
                             )}
                 </div>
             </div>
 
             <div className = "flightsTable hide">
+                <div className="openSearchFlightButton">Поиск</div>
+                            <div className="searchFlightPanel hide">
+                                <button className ="openSearchFlight">Искать по строковым значениям</button>
+                                <button className ="openSearchFlightDate">Искать по дате</button>
+                                <button className="showAllFlights" onClick={searchClick}>Показать все</button>
+                                <button className="closeSearchButton">close</button>
+
+
+                                <div className="searchFlightBlock hide">
+                                    <input className="searchFlight" type='text'  placeholder="Параметр поиска" value={flightParametr} onChange={e=>setFlightParametr(e.target.value)}></input>
+                                    <button className="SearchFlightButton" onClick={searchClick}>Найти</button>
+                                </div>
+                                <div className="searchFlightByDateBlock hide">
+                                    <input className="searchFlightDate" type='date'  placeholder="Параметр поиска" value={flightDateParametr} onChange={e=>setFlightDateParametr(e.target.value)}></input>
+                                    <button className="SearchFlightDateButton" onClick={searchClick}>Найти</button>
+                                </div>             
+                </div> 
                 <button className="closeTableButton">Close table</button>
                 <div className="delete">Удаление<br/>
                         {flight.Flights.map(flight=>
@@ -346,34 +418,34 @@ const Admin = observer(()=>{
                 </div> 
                 <div className="flightId">Идентификатор<br/>
                         {flight.Flights.map(flight=>
-                                <div>{flight.id}</div>
+                                <div className="tableCell">{flight.id}</div>
                             )}
                 </div>     
                 <div className="departureDate">Дата отправления<br/>
                         {flight.Flights.map(flight=>
-                                <div>{flight.departureDate}</div>
+                                <div className="tableCell">{flight.departureDate}</div>
                             )}
                 </div> 
                 <div className="departureTime">Время отправления<br/>
                         {flight.Flights.map(flight=>
-                                <div>{flight.departureTime}</div>
+                                <div className="tableCell">{flight.departureTime}</div>
                             )}
                 </div> 
                 <div className="arrivalDate">Дата прибытия<br/>
                         {flight.Flights.map(flight=>
-                                <div>{flight.arrivalDate}</div>
+                                <div className="tableCell">{flight.arrivalDate}</div>
                             )}
                 </div> 
                 <div className="arrivalTime">Время прибытия<br/>
                         {flight.Flights.map(flight=>
-                                <div>{flight.arrivalTime}</div>
+                                <div className="tableCell">{flight.arrivalTime}</div>
                             )}
                 </div>
                 <div className="departurePoint">Место отправления<br/>
                         {flight.Flights.map(Flight=>
                             flight.Airports.map(airport=>
                                 airport.id == Flight.departurePointId ?
-                                    <div>{airport.airportName}</div>
+                                    <div className="tableCell">{airport.airportName}</div>
                                     :
                                     null
                                 )
@@ -384,7 +456,7 @@ const Admin = observer(()=>{
                         {flight.Flights.map(Flight=>
                             flight.Airports.map(airport=>
                                 airport.id == Flight.placeOfDestinationId ?
-                                    <div>{airport.airportName}</div>
+                                    <div className="tableCell">{airport.airportName}</div>
                                     :
                                     null
                                 )
@@ -395,7 +467,7 @@ const Admin = observer(()=>{
                         {flight.Flights.map(Flight=>
                             flight.Airplanes.map(airplane=>
                                 airplane.id == Flight.airplaneId ?
-                                    <div>{airplane.planeModel}</div>
+                                    <div className="tableCell">{airplane.planeModel}</div>
                                     :
                                     null
                                 )

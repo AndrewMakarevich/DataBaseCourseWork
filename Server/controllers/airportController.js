@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const {Airport} = require ('../models/models');
 const {DeparturePoint} = require ('../models/models');
 const {PlaceOfDestination} = require ('../models/models.js');
@@ -14,8 +15,35 @@ class airportController{
         return res.json(airport);
     }
     async getAll(req, res){
-        const airports = await Airport.findAll();
-       return res.json(airports);
+        const {parametr} = req.query;
+        if(parametr && Number(parametr) == parametr){
+            const airports = await Airport.findAll({
+                where:{
+                    [Op.or]: [
+                    {id:parametr}
+                    ]
+                }    
+            });
+            console.log("DATA TYPE" + typeof parametr);
+            return res.json(airports); 
+        }else if(parametr && typeof parametr == 'string'){
+            const airports = await Airport.findAll({
+                where:{
+                    [Op.or]: [
+                        {airportName:parametr},
+                        {airportCountry:parametr},
+                        {airportAddress:parametr}
+                    ]  
+                } 
+            });
+            console.log("DATA TYPE" + typeof parametr);
+            return res.json(airports); 
+        }else{
+            const airports = await Airport.findAll();
+            console.log("DATA TYPE" + typeof parametr);
+            return res.json(airports); 
+        }
+        
     }
     async getOne(req, res){
         const {id} = req.params;

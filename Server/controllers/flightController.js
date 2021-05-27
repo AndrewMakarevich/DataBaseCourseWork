@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const {AirPlane} = require ('../models/models');
 const {Flight} = require ('../models/models');
 const {DeparturePoint} = require ('../models/models');
@@ -10,12 +11,104 @@ class flightController{
       return res.json(flight);
     }
     async getAll(req, res){
-        const flights = await Flight.findAll({
-          include:[
-            {model: AirPlane, as: 'airplane'}
-          ]
-        });
-        return res.json(flights);
+        const {parametr} = req.query;
+        let dateParametr;
+        if(parametr && Number(parametr)==parametr){
+                  const flights = await Flight.findAll({
+                    where:{
+                      [Op.or]:[
+                        {id: parametr},
+                      ]
+                    },
+                    include:[
+                      {model: AirPlane, as: 'airplane'}
+                    ]
+                  });
+                  return res.json(flights);
+                }else if(parametr && typeof parametr == 'string'){
+                    
+                  
+                    const airport = await Airport.findOne({
+                        where:{airportName: parametr}
+                    });
+                    const plane = await AirPlane.findOne({
+                        where:{planeModel: parametr}
+                    });
+
+                    if(airport !=null){
+                      const airportId = airport.id;
+                      const flights = await Flight.findAll({
+                        where:{
+                          [Op.or]:[
+                            {departurePointId: airportId},
+                            {placeOfDestinationId: airportId}
+                          ]
+                        },
+                        include:[
+                          {model: AirPlane, as: 'airplane'}
+                        ]
+                      });
+                      return res.json(flights);
+                      
+                    }else if(plane !=null){
+                      const planeId = plane.id;
+                      const flights = await Flight.findAll({
+                        where:{
+                          [Op.or]:[
+                            {airplaneId: planeId}
+                          ]
+                        },
+                        include:[
+                          {model: AirPlane, as: 'airplane'}
+                        ]
+                      });
+                      return res.json(flights);
+                    }
+                }else if(parametr && dateParametr!= undefined){
+                    const flights = await Flight.findAll({
+                      where:{
+                        [Op.or]:[
+                          {departureDate: parametr},
+                          {arrivalDate: parametr}
+                        ]
+                      },
+                      include:[
+                        {model: AirPlane, as: 'airplane'}
+                      ]
+                    });
+                    return res.json(flights);
+                }
+                else{
+                  const flights = await Flight.findAll({
+                      include:[
+                        {model: AirPlane, as: 'airplane'}
+                      ]
+                    });
+                  return res.json(flights);
+                }
+
+        try{
+          dateParametr = new Date(parametr);
+            if(parametr && dateParametr!= undefined){
+            const flights = await Flight.findAll({
+              where:{
+                [Op.or]:[
+                  {departureDate: parametr},
+                  {arrivalDate: parametr}
+                ]
+              },
+              include:[
+                {model: AirPlane, as: 'airplane'}
+              ]
+            });
+            return res.json(flights);
+          }
+        }catch(e){
+
+        }
+        
+        
+        
     }
     async getOne(req, res){
         const {id} = req.params;

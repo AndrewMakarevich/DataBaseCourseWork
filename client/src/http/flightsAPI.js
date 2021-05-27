@@ -1,5 +1,6 @@
 import {$authHost, $host} from './index';
 import jwt_decode from "jwt-decode";
+import { useParams } from 'react-router';
 
 
 
@@ -11,10 +12,16 @@ export const createPilot = async (pilotName, pilotSurname, workExperience, educa
 
 };
 
-export const getPilots = async () =>{
+export const getPilots = async (querys) =>{
+    if(querys){
+        const {data} = await $host.get('api/pilot'+ querys);
+        return data;
+    }else{
+        const {data} = await $host.get('api/pilot');
+        return data;
+    }
 
-    const {data} = await $host.get('api/pilot', {});
-    return data;
+    
 
 };
 
@@ -40,10 +47,16 @@ export const createAirplane = async (placeAmount, planeModel, crewId) =>{
 
 };
 
-export const getAirplanes = async () =>{
+export const getAirplanes = async (querys) =>{
+    if(querys){
+        const {data} = await $host.get('api/airplane'+querys);
+        return data;  
+    }else{
+        const {data} = await $host.get('api/airplane');
+        return data; 
+    }
 
-    const {data} = await $host.get('api/airplane', {});
-    return data;
+    
 
 };
 
@@ -72,10 +85,15 @@ export const createAirport = async (airportName, airportCountry, airportAddress)
 
 };
 
-export const getAirports = async () =>{
-
-    const {data} = await $host.get('api/airport', {});
-    return data;
+export const getAirports = async (querys) =>{
+    if(querys){
+        const {data} = await $host.get('api/airport'+querys);
+        return data;
+    }else{
+        const {data} = await $host.get('api/airport');
+        return data;
+    }
+    
 
 };
 
@@ -138,10 +156,16 @@ export const getOneFlight = async (id) =>{
 
 };
 
-export const getFlights = async () =>{
+export const getFlights = async (querys) =>{
+    if(querys){
+        const {data} = await $host.get('api/flight'+querys);
+        return data;
+    }else{
+        const {data} = await $host.get('api/flight');
+        return data;
+    }
 
-    const {data} = await $host.get('api/flight', {});
-    return data;
+    
 
 };
 export const deleteFlight = async (id) =>{

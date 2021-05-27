@@ -1,3 +1,5 @@
+
+const { Op } = require("sequelize");
 const {Pilot} = require ('../models/models');
 class pilotController{
     
@@ -7,16 +9,40 @@ class pilotController{
         return res.json(pilot);
     }
     async getAll(req, res){
-        const {crewId} = req.query;
-        if(crewId){
+        // const {crewId} = req.query;
+        const {parametr} = req.query;
+        if(parametr && Number(parametr) == parametr){
             const pilots = await Pilot.findAll({
-                where:{crewId}
+                where:{
+                    [Op.or]: [
+                        {id: parametr},
+                        
+                        {crewId: parametr}
+                    ]
+                }
+                
             });
+            console.log("NUMBER PARAMETR"+ parametr);
+            return res.json(pilots);
+        }else if(parametr && typeof parametr == 'string'){
+            const pilots = await Pilot.findAll({
+                where:{
+                    [Op.or]: [
+                        {pilotName: parametr},
+                        {pilotSurname: parametr},
+                        {workExperience: parametr},
+                        {education:parametr}
+                    ]
+                }          
+            });
+            console.log(`STRING PARAMETR ${parametr} TYPE ${Number(parametr)}`  );
             return res.json(pilots);
         }else{
             const pilots = await Pilot.findAll();
+            console.log("ALL PARAMETR"+ parametr);
             return res.json(pilots);
         }
+        
         
         
     }

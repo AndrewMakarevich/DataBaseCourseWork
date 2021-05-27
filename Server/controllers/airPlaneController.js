@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const {AirPlane} = require ('../models/models');
 const {Seat} = require ('../models/models');
 const {Crew} = require ('../models/models');
@@ -25,8 +26,34 @@ class airplaneController{
         
     }
     async getAll(req, res, next){
-       const airplanes = await AirPlane.findAll();
-       return res.json(airplanes);
+        const {parametr} = req.query;
+        if(parametr && Number(parametr) == parametr){
+            const airplanes = await AirPlane.findAll({
+                    where:{
+                        [Op.or]: [
+                            {id: parametr},
+                            {placeAmount: parametr},
+                            {crewId: parametr}
+                        ]
+                    }
+                }    
+            );
+            return res.json(airplanes);
+
+        }else if(parametr && typeof parametr == 'string'){
+            const airplanes = await AirPlane.findAll({
+                where:{
+                    [Op.or]: [
+                        {planeModel: parametr}
+                    ]
+                }
+            });
+            return res.json(airplanes);
+        }else{
+            const airplanes = await AirPlane.findAll();
+            return res.json(airplanes);
+        }
+       
     }
 
     async getOne(req, res){
