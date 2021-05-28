@@ -2,11 +2,11 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Context} from '../index';
 import "./Flight.css";
 import {getOneFlight} from '../http/flightsAPI';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 const Flight = observer(()=>{
-      const[currentFlight, setCurrentFlight] = useState('');
+      const[currentFlight, setCurrentFlight] = useState({});
       const flightInfo = 
       {
         departureDate: "2021-07-28T06:18:45.063Z",
@@ -26,22 +26,25 @@ const Flight = observer(()=>{
     };
           const {flight} = useContext(Context);
           const {id} = useParams();
+          
 
           useEffect(()=>{
-            
             getOneFlight(id).then(data=>setCurrentFlight(data));
+            console.log(currentFlight);
           },[]);
           
           
           
     return(
         <div className="flightInfo">
-           <div>Flight ID: {currentFlight.id}</div>
-           <div>Flight ID: </div>
+           <div>Flight ID: {flight.Flight.id}</div>
+           {/* <div>Plane Model:{flight.Flight.airplane.planeModel}</div> */}
+           <div>Flight plane:{flight.Flight.airplaneId }</div>
+           
 
            <div className="departurePoint">
                 From: {flight.DeparturePoints.map(departure=>
-                      departure.id == currentFlight.departurePointId ?
+                      departure.id == flight.Flight.departurePointId ?
                       <div key={departure.id}>
                         {departure.airport.airportName} <br/> ({departure.airport.airportCountry})
                       </div>
@@ -52,7 +55,7 @@ const Flight = observer(()=>{
            <div className="placeOfDestination">
                 To: {flight.PlaceOfDestinations.map(destination=>
             
-                destination.id == flightInfo.id ?
+                destination.id == flight.Flight.placeOfDestinationId ?
                     <div key={destination.id}>
                         {destination.airport.airportName} <br/> ({destination.airport.airportCountry})
                     </div>

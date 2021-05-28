@@ -8,7 +8,7 @@ import { useParams } from 'react-router';
 export const createPilot = async (pilotName, pilotSurname, workExperience, education, crewId) =>{
 
     const {data} = await $authHost.post('api/pilot', {pilotName, pilotSurname, workExperience, education, crewId});
-    return alert('Пилот успешно создан');
+    return alert(data.message);
 
 };
 
@@ -145,13 +145,13 @@ export const getPlaceOfDestinations = async () =>{
 export const createFlight = async (departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId) =>{
 
     const {data} = await $authHost.post('api/flight', {departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId});
-    return alert(`Рейс с id: ${data.id} успешно создан`);
+    return alert(data.message);
 
 };
 
 export const getOneFlight = async (id) =>{
 
-    const {data} = await $host.get('api/flight/' + id);
+    const {data} = await $host.get('api/flight/'+id);
     return data;
 
 };

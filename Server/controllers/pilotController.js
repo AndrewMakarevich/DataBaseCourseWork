@@ -6,7 +6,7 @@ class pilotController{
     async create(req, res){
         const {pilotName, pilotSurname, workExperience, education, crewId} = req.body;
         const pilot = await Pilot.create({pilotName, pilotSurname, workExperience, education, crewId});
-        return res.json(pilot);
+        return res.json({message: `Пилот с id: ${pilot.id} успешно создан`});
     }
     async getAll(req, res){
         // const {crewId} = req.query;

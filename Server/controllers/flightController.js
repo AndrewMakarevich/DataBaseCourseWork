@@ -7,8 +7,16 @@ class flightController{
     
     async create(req, res){
       const {departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId} = req.body;
-      const flight = await Flight.create({departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId});
-      return res.json(flight);
+      if(arrivalDate < departureDate){
+          return res.json({message: "Даты указаны неверно"});
+      }else if(arrivalDate == departureDate && arrivalTime < departureTime){
+          return res.json({message: "Время указано неверно"});
+      }else{
+        const flight = await Flight.create({departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId});
+        return res.json({message: `Рейс с id: ${flight.id} успешно создан`});
+      }
+      
+      
     }
     async getAll(req, res){
         const {parametr} = req.query;
@@ -130,11 +138,18 @@ class flightController{
     async changeOne(req, res){
       const{id} = req.params;
       const {departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId} = req.body;
+      if(arrivalDate < departureDate){
+        return res.json({message: "Даты указаны неверно"});
+    }else if(arrivalDate == departureDate && arrivalTime < departureTime){
+        return res.json({message: "Время указано неверно"});
+    }else{
       await Flight.update(
         {departureDate, arrivalDate, departureTime, arrivalTime, placeOfDestinationId, departurePointId, airplaneId},
         {where:{id}}
       );
       return res.json({message: "Рейс успешно изменен"});
+    }
+      
     }
 
 }
